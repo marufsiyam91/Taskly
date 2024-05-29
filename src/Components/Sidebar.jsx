@@ -1,10 +1,22 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TaskContext } from "../Contexts/TaskContext";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import { TbListDetails } from "react-icons/tb";
+import { IoCheckmarkCircle } from "react-icons/io5";
+import { IoIosRemoveCircle } from "react-icons/io";
+
 
 const Sidebar = () => {
-    const { state: { tasks } } = useContext(TaskContext);
+    const { state: { tasks }, dispatch } = useContext(TaskContext);
     const [selectedTask, setSelectedTask] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("");
+
+    useEffect(() => {
+        // Save tasks to localStorage whenever the tasks state changes
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }, [tasks]);
 
     const handleTaskClick = (task) => {
         setSelectedTask(task);
@@ -15,6 +27,32 @@ const Sidebar = () => {
         setIsModalOpen(false);
         setSelectedTask(null);
     };
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value);
+    };
+
+    // Filter tasks based on the search query and selected category
+    const filteredTasks = tasks.filter(task => 
+        task.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        (selectedCategory === "" || task.category === selectedCategory)
+    );
+
+
+    useEffect(() => {
+        if (selectedTask) {
+            const updatedTask = tasks.find(task => task.id === selectedTask.id);
+            if (updatedTask) {
+                setSelectedTask(updatedTask);
+            } else {
+                closeModal();
+            }
+        }
+    }, [tasks, selectedTask]);
 
     return (
         <aside className='w-1/5 h-[calc(100vh-80px)] border-t border-r rounded-tr-2xl '>
@@ -28,15 +66,40 @@ const Sidebar = () => {
                     )
                     : (
                         <div className="w-full h-full bg-blue-100 rounded-tr-2xl p-4 flex flex-col gap-3">
-                            <input className="p-2 rounded-md" type="text" placeholder="Search by title" />
+                            <input 
+                                className="p-3 rounded-md" 
+                                type="text" 
+                                placeholder="Search by title" 
+                                value={searchQuery}
+                                onChange={handleSearchChange}
+                            />
+                            <select 
+                                className="p-3 rounded-md mb-4" 
+                                value={selectedCategory} 
+                                onChange={handleCategoryChange}
+                            >
+                                <option value="">All Categories</option>
+                                <option value="Work">Work</option>
+                                <option value="Personal">Personal</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Fitness">Fitness</option>
+                                <option value="Education">Education</option>
+                                <option value="Finance">Finance</option>
+                    <option value="Hobbies">Hobbies</option>
+                            </select>
+                            <div className="w-full h-full overflow-scroll hideScroll flex flex-col gap-3">
+
                             {
-                                tasks.map(task => (
-                                    <div className="w-full bg-white rounded-md p-3 cursor-pointer" key={task.id} onClick={() => handleTaskClick(task)}>
-                                        <h2>{task.title}</h2>
-                                        <p>{task.description}</p>
+                                filteredTasks.map(task => (
+                                    <div className={task.completed ? 'relative w-full bg-green-50 rounded-md p-3 ' : 'relative w-full bg-white rounded-md p-3 '} key={task.id} >
+                                        <h2 className="text-2xl font-outfit font-semibold">{task.title}</h2>
+                                        <p className="text-xl font-outfit font-medium">Due date: {task.dueDate}</p>
+                                        <button onClick={() => handleTaskClick(task)} className="absolute top-2 right-3 text-xl cursor-pointer"><TbListDetails /></button>
+                                        <button onClick={() => dispatch({type: task.completed ? 'deleteTask' : 'completeTask', payload:task.id})} className={!task.completed ? 'text-green-500 text-2xl absolute bottom-2 right-3  cursor-pointer' : 'text-red-500 text-2xl absolute bottom-2 right-3  cursor-pointer'}>{task.completed ?  <IoIosRemoveCircle/> : <IoCheckmarkCircle/>}</button>
                                     </div>
                                 ))
                             }
+                            </div>
                         </div>
                     )
                 }
@@ -44,13 +107,18 @@ const Sidebar = () => {
 
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-4 rounded-lg">
-                        <h2 className="text-xl font-bold mb-2 font-primary">{selectedTask.title}</h2>
-                        <p className="font-primary">category: {selectedTask.category}</p>
-                        <p className="mb-4 font-primary">description: {selectedTask.description}</p>
-
-                        {selectedTask.image && <img src={URL.createObjectURL(selectedTask.image)} alt="Task" className="mb-4" />}
-                        <button className="bg-red-500 text-white py-2 px-4 rounded" onClick={closeModal}>Close</button>
+                    <div className="relative bg-slate-600 px-6 py-8 rounded-lg max-w-[550px]">
+                        <button onClick={closeModal} className="absolute -top-12 right-[50%] translate-x-[50%] text-4xl text-white">
+                            <AiOutlineCloseCircle />
+                        </button>
+                        <h2 className="text-3xl font-bold mb-2 font-primary text-white">{selectedTask.title}</h2>
+                        <p className="font-primary text-white text-2xl">Category: {selectedTask.category}</p>
+                        <p className="text-white text-2xl font-primary">Due date: <span className="text-red-500 text-2xl font-outfit">{selectedTask.dueDate}</span></p>
+                        <div className="mb-4 font-primary text-slate-800 text-2xl bg-white mt-2 p-2 rounded-md">
+                            <u>Description:</u>
+                            <p className="text-xl font-semobold font-outfit">{selectedTask.description}</p>
+                        </div>
+                        <button onClick={() => dispatch({type: selectedTask.completed ? 'deleteTask' : 'completeTask', payload:selectedTask.id})} className={!selectedTask.completed ? 'text-green-500 text-2xl absolute top-2 right-3  cursor-pointer' : 'text-red-500 text-2xl absolute top-2 right-3  cursor-pointer'}>{selectedTask.completed ?  <IoIosRemoveCircle/> : <IoCheckmarkCircle/>}</button>
                     </div>
                 </div>
             )}

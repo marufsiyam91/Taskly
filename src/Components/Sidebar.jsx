@@ -55,7 +55,7 @@ const Sidebar = () => {
     }, [tasks, selectedTask]);
 
     return (
-        <aside className='w-1/5 h-[calc(100vh-80px)] border-t border-r rounded-tr-2xl '>
+        <aside className='2xl:w-1/5 xl:w-1/4 w-1/3 h-[calc(100vh-80px)] border-t border-r rounded-tr-2xl '>
             <div className="w-full h-full">
                 {
                     tasks.length === 0 
@@ -91,8 +91,8 @@ const Sidebar = () => {
 
                             {
                                 filteredTasks.map(task => (
-                                    <div className={task.completed ? 'relative w-full bg-green-50 rounded-md p-3 ' : 'relative w-full bg-white rounded-md p-3 '} key={task.id} >
-                                        <h2 className="text-2xl font-outfit font-semibold">{task.title}</h2>
+                                    <div className={task.completed ? 'relative w-full bg-green-50 rounded-md p-3 pr-6' : 'relative w-full bg-white rounded-md p-3 pr-6'} key={task.id} >
+                                        <h2 className="text-2xl font-outfit font-semibold mb-2">{task.title}</h2>
                                         <p className="text-xl font-outfit font-medium">Due date: {task.dueDate}</p>
                                         <button onClick={() => handleTaskClick(task)} className="absolute top-2 right-3 text-xl cursor-pointer"><TbListDetails /></button>
                                         <button onClick={() => dispatch({type: task.completed ? 'deleteTask' : 'completeTask', payload:task.id})} className={!task.completed ? 'text-green-500 text-2xl absolute bottom-2 right-3  cursor-pointer' : 'text-red-500 text-2xl absolute bottom-2 right-3  cursor-pointer'}>{task.completed ?  <IoIosRemoveCircle/> : <IoCheckmarkCircle/>}</button>
@@ -107,13 +107,13 @@ const Sidebar = () => {
 
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="relative bg-slate-600 px-6 py-8 rounded-lg max-w-[550px]">
+                    <div className={selectedTask.completed ? 'relative bg-green-100 px-6 py-8 rounded-lg max-w-[550px]' : 'relative bg-slate-300 px-6 py-8 rounded-lg max-w-[550px]'}>
                         <button onClick={closeModal} className="absolute -top-12 right-[50%] translate-x-[50%] text-4xl text-white">
                             <AiOutlineCloseCircle />
                         </button>
-                        <h2 className="text-3xl font-bold mb-2 font-primary text-white">{selectedTask.title}</h2>
-                        <p className="font-primary text-white text-2xl">Category: {selectedTask.category}</p>
-                        <p className="text-white text-2xl font-primary">Due date: <span className="text-red-500 text-2xl font-outfit">{selectedTask.dueDate}</span></p>
+                        <h2 className="text-3xl font-bold mb-2 font-primary text-black">{selectedTask.title}</h2>
+                        <p className="font-primary text-black text-2xl">Category: {selectedTask.category}</p>
+                        <p className="text-black text-2xl font-primary">Due date: <span className="text-red-500 text-2xl font-outfit">{selectedTask.dueDate}</span></p>
                         <div className="mb-4 font-primary text-slate-800 text-2xl bg-white mt-2 p-2 rounded-md">
                             <u>Description:</u>
                             <p className="text-xl font-semobold font-outfit">{selectedTask.description}</p>

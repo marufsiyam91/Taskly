@@ -6,6 +6,10 @@ export default {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      primary: ["Raleway", "sans-serif"],
+      outfit: ["Outfit", "sans-serif"]
+    }
   },
   plugins: [],
 }

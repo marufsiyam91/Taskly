@@ -51,8 +51,7 @@ const Form = () => {
 
 
   return (
-    <div className="w-2/3 xl:w-3/4 2xl:w-4/5 py-10 px-8">
-        <form className="flex flex-col gap-3 items-start lg:w-[80%] xl:w-[55%] 2xl:w-[50%] ">
+        <form className="flex flex-col gap-3 items-start md:w-[90%] lg:w-[80%] xl:w-[55%] 2xl:w-[50%] ">
             <input className="border py-2 px-3 rounded-md w-full font-primary" type="text" name="title" value={taskInfo.title} onChange={handleChange} placeholder="Add a title" required/>
             <textarea className="border rounded-md w-full text-black py-2 px-3 font-primary" rows={10} name="description" value={taskInfo.description} onChange={handleChange} placeholder="Description" required></textarea>
             <select className="border p-2 rounded-md w-full font-primary" name="category" value={taskInfo.category} onChange={handleChange} required>
@@ -85,7 +84,6 @@ const Form = () => {
 
                 <button onClick={handleSubmit} type="submit" className="font-primary border py-1 px-4 rounded-md border-slate-800 text-xl font-semibold">Add Task</button>
         </form>
-    </div>
   )
 }
 

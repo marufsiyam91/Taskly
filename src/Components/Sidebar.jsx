@@ -4,9 +4,11 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import { TbListDetails } from "react-icons/tb";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import { IoIosRemoveCircle } from "react-icons/io";
+import { IoIosCloseCircle } from "react-icons/io";
 
 
-const Sidebar = () => {
+
+const Sidebar = ({closeSidebar}) => {
     const { state: { tasks }, dispatch } = useContext(TaskContext);
     const [selectedTask, setSelectedTask] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,17 +57,18 @@ const Sidebar = () => {
     }, [tasks, selectedTask]);
 
     return (
-        <aside className='2xl:w-1/5 xl:w-1/4 w-1/3 h-[calc(100vh-80px)] border-t border-r rounded-tr-2xl '>
+        <aside className="relative h-[100vh] smd:h-[calc(100vh-81px)]">
+            <button onClick={() => closeSidebar(false)} className="absolute text-3xl top-1 right-1 block smd:hidden"><IoIosCloseCircle /></button>
             <div className="w-full h-full">
                 {
                     tasks.length === 0 
                     ? (
-                        <div className="w-full h-full bg-red-50 rounded-tr-2xl p-4">
+                        <div className="w-full h-full bg-red-50 smd:rounded-tl-none rounded-tl-2xl  smd:rounded-tr-2xl  px-4 pt-10 smd:pt-4">
                             <h1 className="font-primary font-semibold text-xl">No task has been yet</h1>
                         </div>
                     )
                     : (
-                        <div className="w-full h-full bg-blue-100 rounded-tr-2xl p-4 flex flex-col gap-3">
+                        <div className="w-full h-full bg-blue-100 smd:rounded-tl-none rounded-tl-2xl smd:rounded-tr-2xl  px-4 pt-10 smd:pt-4 flex flex-col gap-3">
                             <input 
                                 className="p-3 rounded-md" 
                                 type="text" 
@@ -89,16 +92,16 @@ const Sidebar = () => {
                             </select>
                             <div className="w-full h-full overflow-scroll hideScroll flex flex-col gap-3">
 
-                            {
-                                filteredTasks.map(task => (
-                                    <div className={task.completed ? 'relative w-full bg-green-50 rounded-md p-3 pr-6' : 'relative w-full bg-white rounded-md p-3 pr-6'} key={task.id} >
-                                        <h2 className="text-2xl font-outfit font-semibold mb-2">{task.title}</h2>
-                                        <p className="text-xl font-outfit font-medium">Due date: {task.dueDate}</p>
-                                        <button onClick={() => handleTaskClick(task)} className="absolute top-2 right-3 text-xl cursor-pointer"><TbListDetails /></button>
-                                        <button onClick={() => dispatch({type: task.completed ? 'deleteTask' : 'completeTask', payload:task.id})} className={!task.completed ? 'text-green-500 text-2xl absolute bottom-2 right-3  cursor-pointer' : 'text-red-500 text-2xl absolute bottom-2 right-3  cursor-pointer'}>{task.completed ?  <IoIosRemoveCircle/> : <IoCheckmarkCircle/>}</button>
-                                    </div>
-                                ))
-                            }
+                                {
+                                    filteredTasks.map(task => (
+                                        <div className={task.completed ? 'relative w-full bg-green-50 rounded-md p-3 pr-6' : 'relative w-full bg-white rounded-md p-3 pr-6'} key={task.id} >
+                                            <h2 className="text-2xl font-outfit font-semibold mb-2">{task.title}</h2>
+                                            <p className="text-xl font-outfit font-medium">Due date: {task.dueDate}</p>
+                                            <button onClick={() => handleTaskClick(task)} className="absolute top-2 right-3 text-xl cursor-pointer"><TbListDetails /></button>
+                                            <button onClick={() => dispatch({type: task.completed ? 'deleteTask' : 'completeTask', payload:task.id})} className={!task.completed ? 'text-green-500 text-2xl absolute bottom-2 right-3  cursor-pointer' : 'text-red-500 text-2xl absolute bottom-2 right-3  cursor-pointer'}>{task.completed ?  <IoIosRemoveCircle/> : <IoCheckmarkCircle/>}</button>
+                                        </div>
+                                    ))
+                                }
                             </div>
                         </div>
                     )

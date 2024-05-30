@@ -46,7 +46,7 @@ const TaskModal = ({ selectedTask, closeModal }) => {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className={selectedTask.completed ? 'relative bg-green-100 px-3 sm:px-6 pb-3 pt-6 sm:pt-8 sm:pb-4 rounded-lg w-full sm:w-[550px] m-4' : 'relative bg-blue-200 px-3 sm:px-6 pb-3 pt-6 sm:pt-8 sm:pb-4 rounded-lg w-[550px] m-4'}>
+            <div className={selectedTask.completed ? 'relative bg-green-100 px-3 sm:px-6 pb-3 pt-6 sm:pt-8 sm:pb-6 rounded-lg w-full sm:w-[550px] m-4' : 'relative bg-blue-200 px-3 sm:px-6 pb-3 pt-6 sm:pt-8 sm:pb-6 rounded-lg w-[550px] m-4'}>
                 <div className={`absolute w-8 h-8 rounded-br-full top-0 left-0 ${selectedTask.priority === 'Low' && 'bg-green-300' || selectedTask.priority === 'Medium' && 'bg-blue-400' || selectedTask.priority === 'High' && 'bg-red-500'}`} ></div>
                 <button onClick={closeModal} className="absolute -top-12 right-[50%] translate-x-[50%] text-4xl text-white">
                     <AiOutlineCloseCircle />
@@ -59,9 +59,9 @@ const TaskModal = ({ selectedTask, closeModal }) => {
                     (
                        <>
                              <h2 className="text-3xl font-bold mb-2 font-outfit text-black">{selectedTask.title}</h2>
-                            <p className="font-primary text-black text-2xl">Category: {selectedTask.category}</p>
+                            <p className="font-primary text-black text-2xl mb-1">{selectedTask.category} (task)</p>
                             <p className="text-black text-2xl font-primary">Due date: <span className="text-red-500 text-2xl font-outfit">{selectedTask.dueDate}</span></p>
-                            <div className=" font-primary text-slate-800 text-2xl bg-white mt-2 p-2 rounded-md">
+                            <div className=" font-primary text-slate-800 text-2xl bg-white mt-3 p-2 rounded-md">
                                 <u>Description:</u>
                                 <p className="text-xl font-semobold font-outfit">{selectedTask.description}</p>
                             </div>
@@ -112,9 +112,12 @@ const TaskModal = ({ selectedTask, closeModal }) => {
                     {selectedTask.completed ? <IoIosRemoveCircle /> : <IoCheckmarkCircle />}
                 </button>
 
+               {
+                !selectedTask.completed &&
                 <button onClick={handleClickSubmit} className='absolute top-2 right-12 text-xl'>
                     {isEditing ?  <MdSaveAs /> : <FiEdit />}
                 </button>
+                }
             </div>
         </div>
     );

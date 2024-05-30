@@ -25,6 +25,13 @@ const reducer = (state, action) => {
                 ...state,
                 tasks: state.tasks.filter(task => task.id !== action.payload)
             };
+        case 'updateTask':
+            return {
+                ...state,
+                tasks: state.tasks.map(task => 
+                    task.id === action.payload.id ? {task:action.payload} : task
+                )
+            }
         case 'loadTasks':
             return {
                 ...state,

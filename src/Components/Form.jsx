@@ -51,9 +51,9 @@ const Form = () => {
 
 
   return (
-        <form className="flex flex-col gap-3 items-start md:w-[90%] lg:w-[80%] xl:w-[55%] 2xl:w-[50%] ">
-            <input className="bg-white border py-2 px-3 rounded-md w-full font-primary" type="text" name="title" value={taskInfo.title} onChange={handleChange} placeholder="Add a title" required/>
-            <textarea className="bg-white border rounded-md w-full text-black py-2 px-3 font-primary" rows={10} name="description" value={taskInfo.description} onChange={handleChange} placeholder="Description" required></textarea>
+        <form className="flex flex-col gap-3 items-start md:w-[90%] lg:w-[80%] xl:w-[60%] 2xl:w-[51%] ">
+            <input className="bg-white border p-3 rounded-md w-full font-primary" type="text" name="title" value={taskInfo.title} onChange={handleChange} placeholder="Add a title" required/>
+            <textarea className="bg-white border rounded-md w-full text-black p-3 font-primary" rows={10} name="description" value={taskInfo.description} onChange={handleChange} placeholder="Description" required></textarea>
             <select className="bg-white border p-3 rounded-md w-full font-primary" name="category" value={taskInfo.category} onChange={handleChange} required>
                     <option value="">Select a category</option>
                     <option value="Work">Work</option>
@@ -64,9 +64,8 @@ const Form = () => {
                     <option value="Finance">Finance</option>
                     <option value="Hobbies">Hobbies</option>
             </select>
-            <input className="font-primary border p-2 rounded-md" type="date" name="dueDate" value={taskInfo.dueDate} onChange={handleChange}/>
-
-            <div className="flex flex-col gap-1">
+            <input className="font-primary border p-2 rounded-md w-full" type="date" name="dueDate" value={taskInfo.dueDate} onChange={handleChange}/>
+            <div className="flex items-center flex-wrap gap-2">
                     <label className="font-primary mb-1 font-bold">Priority:</label>
                     <label className="flex items-center gap-2 font-primary  p-1 rounded-md border-2 justify-between bg-white border-green-300">
                         Low

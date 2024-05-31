@@ -3,6 +3,8 @@ import Form from "./Components/Form"
 import Sidebar from "./Components/Sidebar"
 import { GoTasklist } from "react-icons/go";
 import PlaneImage from './assets/plane 2.png'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -16,6 +18,8 @@ function App() {
     <main className="w-full min-h-[100vh] bg-blue-50">
 
       {/* add react toast message on item added in mobile view */}
+        <ToastContainer/>
+
 
       <div className="h-[80px] flex flex-col items-center pt-3 relative border">
         <button onClick={() => (setShowSidebar(true))} className="block smd:hidden top-6 right-6 absolute text-3xl"><GoTasklist /></button>

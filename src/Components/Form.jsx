@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { TaskContext } from "../Contexts/TaskContext"
+import { toast } from "react-toastify"
 
 
 const Form = () => {
@@ -39,6 +40,7 @@ const Form = () => {
                 completed: false,
                 priority: 'Low',
             });
+            toast.success('task addedSuccessfully')
         }
         else{
             alert('you have to provide all the data')

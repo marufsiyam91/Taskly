@@ -76,7 +76,7 @@ const Form = () => {
                     <option value="Finance">Finance</option>
                     <option value="Hobbies">Hobbies</option>
             </select>
-            <input className="font-primary border p-2 rounded-md w-full" type="date" name="dueDate" value={taskInfo.dueDate} onChange={handleChange}/>
+            <input className="font-primary border p-2 rounded-md w-full bg-white" type="date" name="dueDate" value={taskInfo.dueDate} onChange={handleChange}/>
             <div className="flex items-center flex-wrap gap-2">
                     <label className="font-primary mb-1 font-bold">Priority:</label>
                     <label className="flex items-center gap-2 font-primary  p-1 rounded-md border-2 justify-between bg-white border-green-300">

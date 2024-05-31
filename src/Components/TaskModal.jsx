@@ -82,7 +82,7 @@ const TaskModal = ({ selectedTask, closeModal }) => {
                     <form className='flex flex-col gap-3 mt-6' onSubmit={handleClickSubmit}>
                         <input className='p-3 rounded-md' onChange={handleChange} type="text" name='title' value={collectedValue.title} />
                         <select
-                            className="p-3 rounded-md"
+                            className="p-3 rounded-md bg-white"
                             value={collectedValue.category}
                             name='category'
                             onChange={handleChange}
@@ -96,7 +96,7 @@ const TaskModal = ({ selectedTask, closeModal }) => {
                             <option value="Finance">Finance</option>
                             <option value="Hobbies">Hobbies</option>
                         </select>
-                        <input className="font-primary border p-3 rounded-md" onChange={handleChange} type="date" name="dueDate" value={collectedValue.dueDate} />
+                        <input className="font-outfit border p-3 rounded-md w-full bg-white" onChange={handleChange} type="date" name="dueDate" value={collectedValue.dueDate} />
                         <textarea className='p-3 rounded-md overflow-scroll hideScroll' onChange={handleChange} rows={6} name="description" value={collectedValue.description}></textarea>
                         <div>
                             <label>Priority:</label>

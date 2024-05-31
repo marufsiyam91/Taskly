@@ -29,7 +29,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 tasks: state.tasks.map(task => 
-                    task.id === action.payload.id ? {task:action.payload} : task
+                    task.id === action.payload.id ? { ...action.payload } : task
                 )
             }
         case 'loadTasks':
@@ -45,7 +45,6 @@ const reducer = (state, action) => {
 const TaskContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialValue);
 
-
     useEffect(() => {
         const savedTasks = localStorage.getItem("tasks");
         if (savedTasks) {
@@ -54,13 +53,10 @@ const TaskContextProvider = ({ children }) => {
         }
     }, []);
 
-
     useEffect(() => {
         localStorage.setItem("tasks", JSON.stringify(state.tasks));
         console.log("Tasks saved to localStorage:", state.tasks);
     }, [state.tasks]);
-
-
 
     return (
         <TaskContext.Provider value={{ state, dispatch }}>

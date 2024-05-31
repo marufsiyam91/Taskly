@@ -10,6 +10,8 @@ const TaskModal = ({ selectedTask, closeModal }) => {
     const { dispatch } = useContext(TaskContext);
 
     const [isEditing, setIsEditing] = useState(false);
+    console.log(isEditing)
+    const [errorMessage, setErrorMessage] = useState('');
     const [collectedValue, setCollectedValue] = useState({
         title: selectedTask.title,
         description: selectedTask.description,
@@ -39,10 +41,18 @@ const TaskModal = ({ selectedTask, closeModal }) => {
 
     const handleClickSubmit = (e) => {
         e.preventDefault();
-        setIsEditing(prevValue => !prevValue);
 
-        if (isEditing) {
-            dispatch({ type: 'updateTask', payload: collectedValue });
+        const currentDate = new Date().setHours(0, 0, 0, 0);
+        const dueDate = new Date(collectedValue.dueDate).setHours(0, 0, 0, 0);
+
+        if (dueDate >= currentDate) {
+            setErrorMessage('');
+            setIsEditing(prevValue => !prevValue);
+            if (isEditing) {
+                dispatch({ type: 'updateTask', payload: collectedValue });
+            }
+        } else {
+            setErrorMessage('Due date must be today or a future date.');
         }
     };
 
@@ -69,7 +79,7 @@ const TaskModal = ({ selectedTask, closeModal }) => {
                         </div>
                     </>
                 ) : (
-                    <form className='flex flex-col gap-3 mt-6'>
+                    <form className='flex flex-col gap-3 mt-6' onSubmit={handleClickSubmit}>
                         <input className='p-3 rounded-md' onChange={handleChange} type="text" name='title' value={collectedValue.title} />
                         <select
                             className="p-3 rounded-md"
@@ -103,15 +113,16 @@ const TaskModal = ({ selectedTask, closeModal }) => {
                                 <input type="radio" name="priority" value="High" checked={collectedValue.priority === 'High'} onChange={handleChange} />
                             </label>
                         </div>
+                        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                     </form>
                 )}
 
-                <button onClick={handleTask} className={!selectedTask.completed ? 'text-green-500 text-2xl absolute top-2 right-3 cursor-pointer' : 'text-red-500 text-2xl absolute top-2 right-3 cursor-pointer'}>
+                <button onClick={handleTask} className={!selectedTask.completed ? 'text-green-500 text-3xl absolute top-2 right-3 cursor-pointer' : 'text-red-500 text-2xl absolute top-2 right-3 cursor-pointer'}>
                     {selectedTask.completed ? <IoIosRemoveCircle /> : <IoCheckmarkCircle />}
                 </button>
 
                 {!selectedTask.completed &&
-                    <button onClick={handleClickSubmit} className='absolute top-2 right-12 text-xl'>
+                    <button onClick={handleClickSubmit} className='absolute top-2 right-14 text-2xl'>
                         {isEditing ? <MdSaveAs /> : <FiEdit />}
                     </button>
                 }
@@ -121,3 +132,4 @@ const TaskModal = ({ selectedTask, closeModal }) => {
 }
 
 export default TaskModal;
+

@@ -27,26 +27,36 @@ const Form = () => {
 
 
     const handleSubmit = (e) => {
-        e.preventDefault()
-
-        if(taskInfo.title && taskInfo.category && taskInfo.description && taskInfo.dueDate) {
-            dispatch({type: 'addTask', payload:taskInfo})
-
-            setTaskInfo({
-                title: '',
-                description: '',
-                category: '',
-                dueDate: '',
-                completed: false,
-                priority: 'Low',
-            });
-            toast.success('task addedSuccessfully')
+        e.preventDefault();
+    
+        const currentDate = new Date();
+        const dueDate = new Date(taskInfo.dueDate);
+    
+        // Reset time part to compare only dates
+        currentDate.setHours(0, 0, 0, 0);
+        dueDate.setHours(0, 0, 0, 0);
+    
+        if (taskInfo.title && taskInfo.category && taskInfo.description && taskInfo.dueDate) {
+            if (dueDate >= currentDate) {
+                dispatch({ type: 'addTask', payload: taskInfo });
+    
+                setTaskInfo({
+                    title: '',
+                    description: '',
+                    category: '',
+                    dueDate: '',
+                    completed: false,
+                    priority: 'Low',
+                });
+                toast.success('Task added successfully');
+            } else {
+                alert("due date must be today or further day");
+            }
+        } else {
+            alert('You have to provide all the data.');
         }
-        else{
-            alert('you have to provide all the data')
-        }
-
-    }
+    };
+    
 
 
 

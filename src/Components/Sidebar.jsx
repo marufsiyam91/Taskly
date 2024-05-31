@@ -5,6 +5,7 @@ import { IoCheckmarkCircle } from "react-icons/io5";
 import { IoIosRemoveCircle } from "react-icons/io";
 import { IoIosCloseCircle } from "react-icons/io";
 import TaskModal from "./TaskModal";
+import TaskImage from '../assets/task image.png'
 
 const Sidebar = ({ closeSidebar }) => {
     const { state: { tasks }, dispatch } = useContext(TaskContext);
@@ -63,6 +64,7 @@ const Sidebar = ({ closeSidebar }) => {
                 {tasks.length === 0 ? (
                     <div className="w-full h-full bg-red-100 smd:rounded-tl-none esm:rounded-tl-2xl smd:rounded-tr-2xl px-4 pt-10 smd:pt-4">
                         <h1 className="font-primary text-slate-800 font-semibold text-xl">No task has been yet</h1>
+                        <img className="max-w-[80%] mx-auto mt-12" src={TaskImage} alt="" />
                     </div>
                 ) : (
                     <div className="w-full h-full bg-blue-200 smd:rounded-tl-none esm:rounded-tl-2xl smd:rounded-tr-2xl px-4 pt-10 smd:pt-4 flex flex-col gap-3">
@@ -91,8 +93,8 @@ const Sidebar = ({ closeSidebar }) => {
                             {filteredTasks.map(task => (
                                 // <div className={task.completed ? `relative w-full bg-green-50 rounded-md p-3 pr-6 shadow-sm hover:shadow-md transition duration-300 border-[3px] border-t-transparent border-r-transparent border-l-transparent ${task.priority === 'Low' && 'border-green-300 hover:border-t-green-300 hover:border-r-green-300 hover:border-l-green-300' || task.priority === 'Medium' && 'border-blue-400 hover:border-t-blue-400 hover:border-r-blue-400 hover:border-l-blue-400' || task.priority === 'High' && 'border-red-500 hover:border-t-red-500 hover:border-r-red-500 hover:border-l-red-500' }` : `relative w-full bg-white rounded-md p-3 pr-6 shadow-sm hover:shadow-md transition duration-300 border-[3px] border-t-transparent border-r-transparent border-l-transparent ${task.priority === 'Low' && 'border-green-300 hover:border-t-green-300 hover:border-r-green-300 hover:border-l-green-300' || task.priority === 'Medium' && 'border-blue-400 hover:border-t-blue-400 hover:border-r-blue-400 hover:border-l-blue-400' || task.priority === 'High' && 'border-red-500 hover:border-t-red-500 hover:border-r-red-500 hover:border-l-red-500' } `} key={task.id}>
                                 <div className={task.completed ? `relative w-full bg-green-50 rounded-md p-3 pr-6 shadow-sm hover:shadow-md transition duration-300 border-b-4 border-b-white ${task.priority === 'Low' && 'hover:border-b-green-300' || task.priority === 'Medium' && 'hover:border-b-blue-400' || task.priority === 'High' && 'hover:border-b-red-500' }` : `relative w-full bg-white rounded-md p-3 pr-6 shadow-sm hover:shadow-md transition duration-300 border-b-4 border-b-white ${task.priority === 'Low' && 'hover:border-b-green-300' || task.priority === 'Medium' && 'hover:border-b-blue-400' || task.priority === 'High' && 'hover:border-b-red-500' }`} key={task.id}>
-                                    <h2 className="text-2xl font-primary font-semibold mb-2">{task.title}</h2>
-                                    <p className="text-xl font-primary font-medium">Due date: <span className="text-red-500">{task.dueDate}</span></p>
+                                    <h2 className="text-2xl font-outfit font-semibold mb-2">{task.title}</h2>
+                                    <p className="text-xl font-outfit font-medium">Due date: <span className="text-red-500">{task.dueDate}</span></p>
                                     <button onClick={() => handleTaskClick(task)} className="absolute top-2 right-3 text-xl cursor-pointer"><TbListDetails /></button>
                                     <button onClick={() => handleTask(task)} className={!task.completed ? 'text-green-500 text-2xl absolute bottom-2 right-3 cursor-pointer' : 'text-red-500 text-2xl absolute bottom-2 right-3 cursor-pointer'}>
                                         {task.completed ? <IoIosRemoveCircle /> : <IoCheckmarkCircle />}

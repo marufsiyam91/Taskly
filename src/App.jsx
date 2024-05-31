@@ -21,7 +21,7 @@ function App() {
         <ToastContainer/>
 
 
-      <div className="h-[80px] flex flex-col items-center pt-3 relative border">
+      <div className="h-[80px] flex flex-col items-center pt-3 relative">
         <button onClick={() => (setShowSidebar(true))} className="block smd:hidden top-6 right-6 absolute text-3xl"><GoTasklist /></button>
         <div className="flex">
           <img className="max-w-14" src={PlaneImage} alt="" />

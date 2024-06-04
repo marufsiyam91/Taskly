@@ -66,17 +66,19 @@ const Form = () => {
         <form className="flex flex-col gap-3 items-start md:w-[90%] lg:w-[80%] xl:w-[60%] 2xl:w-[51%] ">
             <input className="bg-white border p-3 rounded-md w-full font-primary" type="text" name="title" value={taskInfo.title} onChange={handleChange} placeholder="Add a title" required/>
             <textarea className="bg-white border rounded-md w-full text-black p-3 font-primary" rows={10} name="description" value={taskInfo.description} onChange={handleChange} placeholder="Description" required></textarea>
-            <select className="bg-white border p-3 rounded-md w-full font-primary" name="category" value={taskInfo.category} onChange={handleChange} required>
-                    <option value="">Select a category</option>
-                    <option value="Work">Work</option>
-                    <option value="Personal">Personal</option>
-                    <option value="Shopping">Shopping</option>
-                    <option value="Fitness">Fitness</option>
-                    <option value="Education">Education</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Hobbies">Hobbies</option>
-            </select>
-            <input className="font-primary border p-2 rounded-md w-full bg-white" type="date" name="dueDate" value={taskInfo.dueDate} onChange={handleChange}/>
+            <div className=" w-full flex esm:flex-row flex-col gap-2">
+                <select className="bg-white border p-3 rounded-md w-full font-primary" name="category" value={taskInfo.category} onChange={handleChange} required>
+                        <option value="">Select a category</option>
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Fitness">Fitness</option>
+                        <option value="Education">Education</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Hobbies">Hobbies</option>
+                </select>
+                <input className="font-primary border p-2 rounded-md w-full bg-white" type="date" name="dueDate" value={taskInfo.dueDate} onChange={handleChange}/>
+            </div>
             <div className="flex items-center flex-wrap gap-2">
                     <label className="font-primary mb-1 font-bold">Priority:</label>
                     <label className="flex items-center gap-2 font-primary  p-1 rounded-md border-2 justify-between bg-white border-green-300">
